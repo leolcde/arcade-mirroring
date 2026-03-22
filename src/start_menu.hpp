@@ -15,4 +15,6 @@
  *                                                                                      *
  * ------------------------------------------------------------------------------------ */
 
-void display_start_menu(IDisplay *actual_lib);
+#include "IDisplay.hpp"
+
+void display_start_menu(IDisplay *actual_lib, Input input);

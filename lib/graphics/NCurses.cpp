@@ -109,6 +109,10 @@ void NCurses::drawText(const Text &text)
 
 Input NCurses::getInput() {
     int ch = getch();
+    if (ch == KEY_UP) return Input::UP;
+    if (ch == KEY_DOWN) return Input::DOWN;
+    if (ch == KEY_LEFT) return Input::LEFT;
+    if (ch == KEY_RIGHT) return Input::RIGHT;
     if (ch == '1') return Input::PREV_LIB;
     if (ch == '2') return Input::NEXT_LIB;
     if (ch == '3') return Input::PREV_GAME;

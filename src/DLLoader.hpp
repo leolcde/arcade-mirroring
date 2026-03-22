@@ -30,10 +30,8 @@ class DLLoader {
         DLLoader(const char *path)
         {
             handle = dlopen(path, RTLD_LAZY);
-            if (!handle) {
-                std::cerr << "Error: " << dlerror() << std::endl;
+            if (!handle)
                 handle = NULL;
-            }
         }
 
         ~DLLoader()
@@ -45,11 +43,8 @@ class DLLoader {
         T *getInstance()
         {
             IDisplay *(*entryPointFunc)() = reinterpret_cast<IDisplay *(*)()>(dlsym(handle, "myEntryPoint"));
-            char *error = dlerror();
-            if (error != NULL) {
-                std::cerr << "Error: " << error << std::endl;
+            if (dlerror() != NULL)
                 return NULL;
-            }
             return entryPointFunc();
         }
 

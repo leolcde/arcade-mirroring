@@ -1,4 +1,5 @@
 arcade
+data
+todo.txt
 *.o
 *.so
-data
