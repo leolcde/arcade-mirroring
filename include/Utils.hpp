@@ -18,26 +18,48 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <string>
 
-enum RenderType {
-    NCURSES = 0,
-    EXIT = 1
-};
-
-struct Entity {
-    int x;
-    int y;
-    char symbol;
-};
-
-enum Input {
+enum class Input {
+    NONE = 0,
     UP,
     DOWN,
     LEFT,
     RIGHT,
-    NEXT_GAME,
+    ACTION,
     NEXT_LIB,
+    PREV_LIB,
+    NEXT_GAME,
+    PREV_GAME,
     RESTART,
     MENU,
     EXIT
+};
+
+enum class Color {
+    DEFAULT = 0,
+    BLACK,
+    RED,
+    GREEN,
+    YELLOW,
+    BLUE,
+    MAGENTA,
+    CYAN,
+    WHITE
+};
+
+struct Entity {
+    float x;
+    float y;
+    char ncursesChar;
+    std::string spritePath;
+    Color color;
+};
+
+struct Text {
+    float x;
+    float y;
+    std::string text;
+    Color color;
 };

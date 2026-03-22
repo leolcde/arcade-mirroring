@@ -19,11 +19,10 @@
 #pragma once
 
 #include <ncurses.h>
-#include <vector>
 #include <map>
 #include <sstream>
 #include <iomanip>
-#include "../include/IDisplay.hpp"
+#include "../../include/IDisplay.hpp"
 
 class NCurses : public IDisplay {
     private:
@@ -31,15 +30,19 @@ class NCurses : public IDisplay {
         int _width;
         int _height;
         int _cursor;
-        std::vector<IDisplay *> _modules;
 
     public:
-        NCurses(std::vector<IDisplay *>& modules);
+        NCurses();
         ~NCurses();
 
         void init() override;
         void stop() override;
-        void render() override;
-        RenderType getInput() override;
-        std::string getName();
+        std::string getName() override;
+
+        // Display methods
+        void clear() override;
+        void display() override;
+        void drawEntity(const Entity &entity) override;
+        void drawText(const Text &text) override;
+        Input getInput() override;
 };

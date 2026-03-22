@@ -1,0 +1,4 @@
+arcade
+*.o
+*.so
+data
