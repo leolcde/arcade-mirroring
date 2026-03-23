@@ -1,32 +1,24 @@
-/* ------------------------------------------------------------------------------------ *
- *                                                                                      *
- * EPITECH PROJECT - Sat, Mar, 2026                                                     *
- * Title           - arcade                                                             *
- * Description     -                                                                    *
- *     NCurses                                                                   *
- *                                                                                      *
- * ------------------------------------------------------------------------------------ *
- *                                                                                      *
- *       ▄▀▀█▄▄▄▄  ▄▀▀▄▀▀▀▄  ▄▀▀█▀▄    ▄▀▀▀█▀▀▄  ▄▀▀█▄▄▄▄  ▄▀▄▄▄▄   ▄▀▀▄ ▄▄             *
- *      ▐  ▄▀   ▐ █   █   █ █   █  █  █    █  ▐ ▐  ▄▀   ▐ █ █    ▌ █  █   ▄▀            *
- *        █▄▄▄▄▄  ▐  █▀▀▀▀  ▐   █  ▐  ▐   █       █▄▄▄▄▄  ▐ █      ▐  █▄▄▄█             *
- *        █    ▌     █          █        █        █    ▌    █         █   █             *
- *       ▄▀▄▄▄▄    ▄▀        ▄▀▀▀▀▀▄   ▄▀        ▄▀▄▄▄▄    ▄▀▄▄▄▄▀   ▄▀  ▄▀             *
- *       █    ▐   █         █       █ █          █    ▐   █     ▐   █   █               *
- *       ▐        ▐         ▐       ▐ ▐          ▐        ▐         ▐   ▐               *
- *                                                                                      *
- * ------------------------------------------------------------------------------------ */
+/*
+** Project  -  arcade
+** Date     -  March 20th 2026
+**
+** Copyright (c) 2026 Jules Nourdin
+*/
 
 #include "NCurses.hpp"
 
-NCurses::NCurses() : _window(NULL), _cursor(0) {}
+NCurses::NCurses() : _window(NULL), _cursor(0)
+{
+    NCurses::init();
+}
 
 NCurses::~NCurses()
 {
-    this->NCurses::stop();
+    NCurses::stop();
 }
 
-void NCurses::init() {
+void NCurses::init()
+{
     initscr();
     noecho();
     cbreak();
@@ -55,7 +47,8 @@ void NCurses::init() {
     _window = stdscr;
 }
 
-void NCurses::stop() {
+void NCurses::stop()
+{
     if (!isendwin()) endwin();
 }
 
@@ -107,7 +100,8 @@ void NCurses::drawText(const Text &text)
     attroff(COLOR_PAIR(pair));
 }
 
-Input NCurses::getInput() {
+Input NCurses::getInput()
+{
     int ch = getch();
     if (ch == KEY_UP) return Input::UP;
     if (ch == KEY_DOWN) return Input::DOWN;

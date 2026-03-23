@@ -1,16 +1,11 @@
 /*
-** EPITECH PROJECT, 2026
-** bs-arcarde
-** File description:
-** main
+** Project  -  arcade
+** Date     -  March 20th 2026
+**
+** Copyright (c) 2026 Jules Nourdin
 */
 
-#include "DLLoader.hpp"
-#include "start_menu.hpp"
-#include <vector>
-#include <string>
-#include <chrono>
-#include <thread>
+#include "utils.hpp"
 
 int main(int ac, char **av)
 {
@@ -28,7 +23,6 @@ int main(int ac, char **av)
         return 84;
     }
 
-    actual_lib->init();
     while (true) {
         actual_lib->clear();
         Input input = actual_lib->getInput();

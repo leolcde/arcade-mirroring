@@ -1,19 +1,9 @@
-/* ------------------------------------------------------------------------------------ *
- *                                                                                      *
- * EPITECH PROJECT - Sat, Mar, 2026                                                     *
- * Title           - arcade                                                             *
- * Description     -                                                                    *
- *     Utils                                                                            *
- *                                                                                      *
- * ------------------------------------------------------------------------------------ *
- *                                                                                      *
- *         ░        ░       ░░        ░        ░        ░░      ░░  ░░░░  ░             *
- *         ▒  ▒▒▒▒▒▒▒  ▒▒▒▒  ▒▒▒▒  ▒▒▒▒▒▒▒  ▒▒▒▒  ▒▒▒▒▒▒▒  ▒▒▒▒  ▒  ▒▒▒▒  ▒             *
- *         ▓      ▓▓▓       ▓▓▓▓▓  ▓▓▓▓▓▓▓  ▓▓▓▓      ▓▓▓  ▓▓▓▓▓▓▓        ▓             *
- *         █  ███████  ██████████  ███████  ████  ███████  ████  █  ████  █             *
- *         █        █  ███████        ████  ████        ██      ██  ████  █             *
- *                                                                                      *
- * ------------------------------------------------------------------------------------ */
+/*
+** Project  -  arcade
+** Date     -  March 20th 2026
+**
+** Copyright (c) 2026 Jules Nourdin
+*/
 
 #pragma once
 
@@ -21,7 +11,8 @@
 #include <vector>
 #include <string>
 
-enum class Input {
+enum class Input
+{
     NONE = 0,
     UP,
     DOWN,
@@ -37,7 +28,8 @@ enum class Input {
     EXIT
 };
 
-enum class Color {
+enum class Color
+{
     DEFAULT = 0,
     BLACK,
     RED,
@@ -49,7 +41,8 @@ enum class Color {
     WHITE
 };
 
-struct Entity {
+struct Entity
+{
     float x;
     float y;
     char ncursesChar;
@@ -57,7 +50,8 @@ struct Entity {
     Color color;
 };
 
-struct Text {
+struct Text
+{
     float x;
     float y;
     std::string text;

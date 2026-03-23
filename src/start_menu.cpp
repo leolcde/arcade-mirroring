@@ -1,26 +1,14 @@
-#include "DLLoader.hpp"
-#include "start_menu.hpp"
-#include <dirent.h>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
+/*
+** Project  -  arcade
+** Date     -  March 21st 2026
+**
+** Copyright (c) 2026 Jules Nourdin
+*/
 
-std::vector<std::string> get_libs_from_dir(const std::string &path) {
-    std::vector<std::string> libs;
-    DIR *dir = opendir(path.c_str());
-    if (dir == nullptr) return libs;
+#include "utils.hpp"
 
-    struct dirent *entry;
-    while ((entry = readdir(dir)) != nullptr) {
-        std::string name = entry->d_name;
-        if (name.length() > 3 && name.substr(name.length() - 3) == ".so")
-            libs.push_back(name);
-    }
-    closedir(dir);
-    return libs;
-}
-
-static std::vector<std::pair<std::string, int>> get_scores_for_game(const std::string& game_name) {
+static std::vector<std::pair<std::string, int>> get_scores_for_game(const std::string& game_name)
+{
     std::vector<std::pair<std::string, int>> scores;
     std::ifstream file("data/scores");
     std::string line;
@@ -72,6 +60,7 @@ void display_start_menu(IDisplay *actual_lib, Input input)
         if (current_category == 2) {
             std::ofstream file("data/scores", std::ios::app);
             std::string game = games_libs.empty() ? "None" : games_libs[selected_game];
+            launch_game();
             file << game << " " << player_name << " 0\n";
         }
     }
