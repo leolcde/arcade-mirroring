@@ -9,6 +9,7 @@
 
 #include <dlfcn.h>
 #include "../include/IDisplay.hpp"
+#include "../include/IGame.hpp"
 
 template <typename T>
 class DLLoader {
@@ -31,7 +32,7 @@ class DLLoader {
 
         T *getInstance()
         {
-            IDisplay *(*entryPointFunc)() = reinterpret_cast<IDisplay *(*)()>(dlsym(handle, "myEntryPoint"));
+            T *(*entryPointFunc)() = reinterpret_cast<T *(*)()>(dlsym(handle, "myEntryPoint"));
             if (dlerror() != NULL)
                 return NULL;
             return entryPointFunc();

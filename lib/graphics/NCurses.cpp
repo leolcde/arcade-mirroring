@@ -107,6 +107,7 @@ Input NCurses::getInput()
     if (ch == KEY_DOWN) return Input::DOWN;
     if (ch == KEY_LEFT) return Input::LEFT;
     if (ch == KEY_RIGHT) return Input::RIGHT;
+    if (ch == KEY_ENTER || ch == '\n' || ch == '\r') return Input::ACTION;
     if (ch == '1') return Input::PREV_LIB;
     if (ch == '2') return Input::NEXT_LIB;
     if (ch == '3') return Input::PREV_GAME;

@@ -19,10 +19,9 @@ class IGame
         virtual std::string getName() = 0;
 
         // Game methods
-        virtual void updateInput(Input input) = 0;
-        virtual void updateTick() = 0;
-        virtual const std::vector<Entity> &getEntities() = 0;
-        virtual const std::vector<Text> &getTexts() = 0;
+        virtual void update(Input input) = 0;
+        virtual std::vector<Entity> &getEntities() = 0;
+        virtual std::vector<Text> &getTexts() = 0;
         virtual int getScore() = 0;
         virtual bool isGameOver() = 0;
 

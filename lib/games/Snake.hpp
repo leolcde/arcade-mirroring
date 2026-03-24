@@ -14,7 +14,9 @@
 class Snake : public IGame
 {
     private:
-        std::vector<Entity> _entities;
+        std::vector<Entity> _gameEntities;
+        std::vector<Entity> _wallsEntities;
+        std::vector<Entity> _renderEntities;
         std::vector<Text> _texts;
         int _score;
         Input _lastInput;
@@ -29,10 +31,9 @@ class Snake : public IGame
         std::string getName() override;
 
         // Game methods
-        void updateInput(Input input) override;
-        void updateTick() override;
-        const std::vector<Entity> &getEntities() override;
-        const std::vector<Text> &getTexts() override;
+        void update(Input input) override;
+        std::vector<Entity> &getEntities() override;
+        std::vector<Text> &getTexts() override;
         int getScore() override;
         bool isGameOver() override;
         bool entityOnSnake(Entity entity);
