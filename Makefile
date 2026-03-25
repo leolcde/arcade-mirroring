@@ -38,10 +38,10 @@ graphicals: $(foreach lib,$(GRAPHICS_LIBS),lib/graphics/$(lib))
 
 games: $(foreach lib,$(GAMES_LIBS),lib/games/$(lib))
 
-lib/graphics/NCurses.so: $(NCURSES_OBJ)
+lib/graphics/arcade_ncurses.so: $(NCURSES_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(NCURSES_OBJ) -lncurses
 
-lib/graphics/Caca.so: $(CACA_OBJ)
+lib/graphics/arcade_libcaca.so: $(CACA_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(CACA_OBJ) -lcaca
 
 lib/games/Snake.so: $(SNAKE_OBJ)
