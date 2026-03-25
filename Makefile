@@ -22,7 +22,7 @@ NCURSES_OBJ		= $(NCURSES_SRC:.cpp=.o)
 CACA_SRC		= lib/graphics/Caca.cpp
 CACA_OBJ		= $(CACA_SRC:.cpp=.o)
 
-GAMES_LIBS		= Snake.so
+GAMES_LIBS		= arcade_snake.so
 
 SNAKE_SRC		= lib/games/Snake.cpp
 SNAKE_OBJ		= $(SNAKE_SRC:.cpp=.o)
@@ -44,7 +44,7 @@ lib/graphics/arcade_ncurses.so: $(NCURSES_OBJ)
 lib/graphics/arcade_libcaca.so: $(CACA_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(CACA_OBJ) -lcaca
 
-lib/games/Snake.so: $(SNAKE_OBJ)
+lib/games/arcade_snake.so: $(SNAKE_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(SNAKE_OBJ)
 
 %.o: %.cpp
