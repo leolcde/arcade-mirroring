@@ -15,7 +15,7 @@ CORE_SRC	=	src/main.cpp \
 				src/launcher.cpp
 CORE_OBJ	=	$(CORE_SRC:.cpp=.o)
 
-GRAPHICS_LIBS	= NCurses.so Caca.so
+GRAPHICS_LIBS	= arcade_ncurses.so arcade_libcaca.so
 
 NCURSES_SRC		= lib/graphics/NCurses.cpp
 NCURSES_OBJ		= $(NCURSES_SRC:.cpp=.o)
