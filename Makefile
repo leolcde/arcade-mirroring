@@ -15,11 +15,15 @@ CORE_SRC	=	src/main.cpp \
 				src/launcher.cpp
 CORE_OBJ	=	$(CORE_SRC:.cpp=.o)
 
-GRAPHICS_LIBS	= NCurses.so
+GRAPHICS_LIBS	= NCurses.so Caca.so
+
 NCURSES_SRC		= lib/graphics/NCurses.cpp
 NCURSES_OBJ		= $(NCURSES_SRC:.cpp=.o)
+CACA_SRC		= lib/graphics/Caca.cpp
+CACA_OBJ		= $(CACA_SRC:.cpp=.o)
 
 GAMES_LIBS		= Snake.so
+
 SNAKE_SRC		= lib/games/Snake.cpp
 SNAKE_OBJ		= $(SNAKE_SRC:.cpp=.o)
 
@@ -37,6 +41,9 @@ games: $(foreach lib,$(GAMES_LIBS),lib/games/$(lib))
 lib/graphics/NCurses.so: $(NCURSES_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(NCURSES_OBJ) -lncurses
 
+lib/graphics/Caca.so: $(CACA_OBJ)
+	$(C) $(CFLAGS) -shared -o $@ $(CACA_OBJ) -lcaca
+
 lib/games/Snake.so: $(SNAKE_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(SNAKE_OBJ)
 
@@ -51,7 +58,9 @@ clean:
 fclean: clean
 	rm -f $(BIN)
 	rm -f lib/graphics/*.so
+	rm -f lib/graphics/*.o
 	rm -f lib/games/*.so
+	rm -f lib/games/*.o
 
 re: fclean all
 
