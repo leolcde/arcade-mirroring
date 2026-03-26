@@ -26,8 +26,6 @@ GAMES_LIBS		= Snake.so Nibbler.so
 
 SNAKE_SRC		= lib/games/Snake.cpp
 SNAKE_OBJ		= $(SNAKE_SRC:.cpp=.o)
-NIBBLER_SRC		= lib/games/Nibbler.cpp
-NIBBLER_OBJ		= $(NIBBLER_SRC:.cpp=.o)
 
 all: core graphicals games
 
@@ -46,11 +44,8 @@ lib/graphics/arcade_ncurses.so: $(NCURSES_OBJ)
 lib/graphics/arcade_libcaca.so: $(CACA_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(CACA_OBJ) -lcaca
 
-lib/games/Snake.so: $(SNAKE_OBJ)
+lib/games/arcade_snake.so: $(SNAKE_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(SNAKE_OBJ)
-
-lib/games/Nibbler.so: $(NIBBLER_OBJ)
-	$(C) $(CFLAGS) -shared -o $@ $(NIBBLER_OBJ)
 
 %.o: %.cpp
 	$(C) $(CFLAGS) -c -o $@ $<
