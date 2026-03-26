@@ -29,7 +29,7 @@ void Snake::init()
     // First apple
     Entity apple;
     apple.color = Color::RED;
-    apple.ncursesChar = '*';
+    apple.entChar = '*';
     apple.x = dist_apple(gen);
     apple.y = dist_apple(gen);
     _gameEntities.push_back(apple);
@@ -37,12 +37,12 @@ void Snake::init()
     // Init small snake
     Entity newSnakePart;
     newSnakePart.color = Color::GREEN;
-    newSnakePart.ncursesChar = '@';
+    newSnakePart.entChar = '@';
     newSnakePart.x = dist_snake(gen);
     newSnakePart.y = dist_snake(gen);
     _gameEntities.push_back(newSnakePart);
     for (int i = 1; i <= 2; i++) {
-        newSnakePart.ncursesChar = '0';
+        newSnakePart.entChar = '0';
         newSnakePart.x = _gameEntities[1].x - i;
         newSnakePart.y = _gameEntities[1].y;
         _gameEntities.push_back(newSnakePart);
@@ -57,7 +57,7 @@ void Snake::init()
     // Init wall parts
     Entity newWallPart;
     newWallPart.color = Color::WHITE;
-    newWallPart.ncursesChar = 'X';
+    newWallPart.entChar = 'X';
     for (int i = 0; i <= 16; i += 16) {
         for (int j = 0; j <= 32; j++) {
             newWallPart.x = j;
@@ -93,7 +93,7 @@ void Snake::addSnakePart()
 {
     Entity newSnakePart;
     newSnakePart.color = Color::GREEN;
-    newSnakePart.ncursesChar = '0';
+    newSnakePart.entChar = '0';
     Entity lastSnakePart = _gameEntities[_gameEntities.size() - 1];
     Entity penultimateSnakePart = _gameEntities[_gameEntities.size() - 2];
     if (lastSnakePart.y < penultimateSnakePart.y) {

@@ -45,7 +45,7 @@ struct Entity
 {
     float x;
     float y;
-    char ncursesChar;
+    char entChar;
     std::string spritePath;
     Color color;
 };

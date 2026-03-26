@@ -88,7 +88,7 @@ void NCurses::drawEntity(const Entity &entity)
 {
     int pair = getColorPair(entity.color);
     attron(COLOR_PAIR(pair));
-    mvaddch((int)entity.y, (int)entity.x, entity.ncursesChar);
+    mvaddch((int)entity.y, (int)entity.x, entity.entChar);
     attroff(COLOR_PAIR(pair));
 }
 

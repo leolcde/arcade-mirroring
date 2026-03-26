@@ -55,7 +55,7 @@ void Caca::clear()
 void Caca::drawEntity(const Entity &entity)
 {
     caca_set_color_ansi(_canvas, (int)entity.color, CACA_BLACK);
-    caca_put_char(_canvas, (int)entity.x, (int)entity.y, entity.ncursesChar);
+    caca_put_char(_canvas, (int)entity.x, (int)entity.y, entity.entChar);
 }
 
 void Caca::drawText(const Text &text)
