@@ -118,7 +118,6 @@ Input NCurses::getInput()
     return Input::NONE;
 }
 
-
 // Others
 extern "C" IDisplay *myEntryPoint()
 {
