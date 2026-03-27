@@ -45,6 +45,8 @@ struct Entity
 {
     float x;
     float y;
+    float x_sfml;
+    float y_sfml;
     char entChar;
     std::string spritePath;
     Color color;

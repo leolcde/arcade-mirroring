@@ -15,18 +15,19 @@ CORE_SRC	=	src/main.cpp \
 				src/launcher.cpp
 CORE_OBJ	=	$(CORE_SRC:.cpp=.o)
 
-GRAPHICS_LIBS	= arcade_ncurses.so arcade_libcaca.so
+GRAPHICS_LIBS	= arcade_ncurses.so arcade_libcaca.so arcade_sfml.so
 
 NCURSES_SRC		= lib/graphics/NCurses.cpp
 NCURSES_OBJ		= $(NCURSES_SRC:.cpp=.o)
 CACA_SRC		= lib/graphics/Caca.cpp
 CACA_OBJ		= $(CACA_SRC:.cpp=.o)
+SFML_SRC		= lib/graphics/Sfml.cpp
+SFML_OBJ		= $(SFML_SRC:.cpp=.o)
 
 GAMES_LIBS		= arcade_snake.so arcade_nibbler.so
 
 SNAKE_SRC		= lib/games/Snake.cpp
 SNAKE_OBJ		= $(SNAKE_SRC:.cpp=.o)
-
 NIBBLER_SRC		= lib/games/Nibbler.cpp
 NIBBLER_OBJ		= $(NIBBLER_SRC:.cpp=.o)
 
@@ -46,6 +47,9 @@ lib/graphics/arcade_ncurses.so: $(NCURSES_OBJ)
 
 lib/graphics/arcade_libcaca.so: $(CACA_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(CACA_OBJ) -lcaca
+
+lib/graphics/arcade_sfml.so: $(SFML_OBJ)
+	$(C) $(CFLAGS) -shared -o $@ $(SFML_OBJ) -lsfml-graphics -lsfml-window -lsfml-system
 
 lib/games/arcade_snake.so: $(SNAKE_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(SNAKE_OBJ)
