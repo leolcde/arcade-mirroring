@@ -31,6 +31,8 @@ std::vector<std::pair<std::string, int>> get_leaderboard_for_game(const std::str
 
 std::string input_handling(Input input)
 {
+    std::string selected_game_file = "./lib/arcade_" +  games_libs[selected_game] + ".so";
+
     switch (input) {
         case Input::DOWN:
             switch (current_category) {
@@ -63,7 +65,7 @@ std::string input_handling(Input input)
             }
             break;
         case Input::ACTION:
-            if (current_category == 1) { return games_libs.empty() ? "None" : "./lib/games/" + games_libs[selected_game]; }
+            if (current_category == 1) { return games_libs.empty() ? "None" : selected_game_file; }
             break;
         default:
             break;

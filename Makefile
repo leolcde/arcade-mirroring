@@ -17,16 +17,16 @@ CORE_OBJ	=	$(CORE_SRC:.cpp=.o)
 
 GRAPHICS_LIBS	= arcade_ncurses.so arcade_libcaca.so arcade_sfml.so
 
-NCURSES_SRC		= lib/graphics/NCurses.cpp
+NCURSES_SRC		= lib/NCurses.cpp
 NCURSES_OBJ		= $(NCURSES_SRC:.cpp=.o)
-CACA_SRC		= lib/graphics/Caca.cpp
+CACA_SRC		= lib/Caca.cpp
 CACA_OBJ		= $(CACA_SRC:.cpp=.o)
 SFML_SRC		= lib/graphics/Sfml.cpp
 SFML_OBJ		= $(SFML_SRC:.cpp=.o)
 
 GAMES_LIBS		= arcade_snake.so arcade_nibbler.so
 
-SNAKE_SRC		= lib/games/Snake.cpp
+SNAKE_SRC		= lib/Snake.cpp
 SNAKE_OBJ		= $(SNAKE_SRC:.cpp=.o)
 NIBBLER_SRC		= lib/games/Nibbler.cpp
 NIBBLER_OBJ		= $(NIBBLER_SRC:.cpp=.o)
@@ -38,14 +38,14 @@ core: $(BIN)
 $(BIN): $(CORE_OBJ)
 	$(C) $(CFLAGS) -o $(BIN) $(CORE_OBJ) -ldl
 
-graphicals: $(foreach lib,$(GRAPHICS_LIBS),lib/graphics/$(lib))
+graphicals: $(foreach lib,$(GRAPHICS_LIBS),lib/$(lib))
 
-games: $(foreach lib,$(GAMES_LIBS),lib/games/$(lib))
+games: $(foreach lib,$(GAMES_LIBS),lib/$(lib))
 
-lib/graphics/arcade_ncurses.so: $(NCURSES_OBJ)
+lib/arcade_ncurses.so: $(NCURSES_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(NCURSES_OBJ) -lncurses
 
-lib/graphics/arcade_libcaca.so: $(CACA_OBJ)
+lib/arcade_libcaca.so: $(CACA_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(CACA_OBJ) -lcaca
 
 lib/graphics/arcade_sfml.so: $(SFML_OBJ)
@@ -67,10 +67,8 @@ clean:
 
 fclean: clean
 	rm -f $(BIN)
-	rm -f lib/graphics/*.so
-	rm -f lib/graphics/*.o
-	rm -f lib/games/*.so
-	rm -f lib/games/*.o
+	rm -f lib/*.o
+	rm -f lib/*.so
 
 re: fclean all
 

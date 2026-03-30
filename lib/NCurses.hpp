@@ -11,7 +11,7 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
-#include "../../include/IDisplay.hpp"
+#include "../include/IDisplay.hpp"
 
 class NCurses : public IDisplay
 {

@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "../../include/IDisplay.hpp"
+#include "../include/IDisplay.hpp"
 #include <caca.h>
 
 using namespace std;
