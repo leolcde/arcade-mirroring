@@ -13,7 +13,7 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
-#include "../../include/IDisplay.hpp"
+#include "../include/IDisplay.hpp"
 
 class Sfml : public IDisplay
 {

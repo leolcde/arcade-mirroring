@@ -1,7 +1,7 @@
 /*
 ** Project  : arcade
 ** File     : Caca.hpp
-** Path     : lib/graphics
+** Path     : lib
 ** Date     : 3/24/26  10:26AM
 **
 ** Made by Léo Lacordaire

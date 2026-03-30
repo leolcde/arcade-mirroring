@@ -6,7 +6,6 @@
 */
 
 #include "utils.hpp"
-#include "../lib/graphics/Sfml.hpp"
 
 static int current_category = 0; // 0: graphics, 1: games, 2: name
 static size_t selected_graphic = 0;
