@@ -72,46 +72,47 @@ std::string input_handling(Input input)
     return "";
 }
 
-void sfmlMenuDisplay(IDisplay *actual_lib)
+void displayMenuWithCells(IDisplay *actual_lib)
 {
-    actual_lib->drawText({500, 100, "=== ARCADE MENU ===", Color::MAGENTA});
+    actual_lib->drawText({28 * CELL_W, 2 * CELL_H, "=== ARCADE MENU ===", Color::MAGENTA});
+    actual_lib->drawText({17 * CELL_W, 5 * CELL_H, "GRAPHICS LIBRARIES:", current_category == 0 ? Color::GREEN : Color::CYAN});
 
-    actual_lib->drawText({200, 200, "GRAPHICS LIBRARIES:", current_category == 0 ? Color::GREEN : Color::CYAN});
     if (graphics_libs.empty())
-        actual_lib->drawText({19, 7, "No libs found...", Color::RED});
+        actual_lib->drawText({19 * CELL_W, 7 * CELL_H, "No libs found...", Color::RED});
     for (size_t i = 0; i < graphics_libs.size(); ++i) {
         std::string prefix = (i == selected_graphic && current_category == 0) ? "[X] " : "[ ] ";
-        actual_lib->drawText({19, 7.0f + i, prefix + graphics_libs[i], Color::WHITE});
+        actual_lib->drawText({19 * CELL_W, (7 + i) * CELL_H, prefix + graphics_libs[i], Color::WHITE});
     }
 
-    actual_lib->drawText({900, 200, "GAMES LIBRARIES:", current_category == 1 ? Color::GREEN : Color::CYAN});
+    actual_lib->drawText({40 * CELL_W, 5 * CELL_H, "GAMES LIBRARIES:", current_category == 1 ? Color::GREEN : Color::CYAN});
+
     if (games_libs.empty())
-        actual_lib->drawText({42, 7, "No games found...", Color::RED});
+        actual_lib->drawText({42 * CELL_W, 7 * CELL_H, "No games found...", Color::RED});
     for (size_t i = 0; i < games_libs.size(); ++i) {
         std::string prefix = (i == selected_game && current_category == 1) ? "[X] " : "[ ] ";
-        actual_lib->drawText({42, 7.0f + i, prefix + games_libs[i], Color::WHITE});
+        actual_lib->drawText({42 * CELL_W, (7 + i) * CELL_H, prefix + games_libs[i], Color::WHITE});
     }
 
-    actual_lib->drawText({17, 10, "ENTER YOUR NAME:", current_category == 2 ? Color::GREEN : Color::YELLOW});
+    actual_lib->drawText({17 * CELL_W, 10 * CELL_H, "ENTER YOUR NAME:", current_category == 2 ? Color::GREEN : Color::YELLOW});
     std::string display_name = "> " + actual_username;
     if (current_category == 2) {
         display_name.insert(name_cursor + 2, "[");
         display_name.insert(name_cursor + 4, "]");
     } else
         display_name += "_";
-    actual_lib->drawText({19, 12, display_name, Color::GREEN});
+    actual_lib->drawText({19 * CELL_W, 12 * CELL_H, display_name, Color::GREEN});
 
-    actual_lib->drawText({40, 10, "LEADERBOARD:", Color::YELLOW});
+    actual_lib->drawText({40 * CELL_W, 10 * CELL_H, "LEADERBOARD:", Color::YELLOW});
     auto scores = get_leaderboard_for_game(games_libs.empty() ? "" : games_libs[selected_game]);
     if (scores.empty())
-        actual_lib->drawText({42, 12, "No scores yet.", Color::WHITE});
+        actual_lib->drawText({42 * CELL_W, 12 * CELL_H, "No scores yet.", Color::WHITE});
     else {
         for (size_t i = 0; i < std::min(scores.size(), (size_t)5); ++i)
-            actual_lib->drawText({42, 12.0f + i, std::to_string(i + 1) + ". " + scores[i].first + " - " + std::to_string(scores[i].second), Color::WHITE});
+            actual_lib->drawText({42 * CELL_W, (12 + i) * CELL_H, std::to_string(i + 1) + ". " + scores[i].first + " - " + std::to_string(scores[i].second), Color::WHITE});
     }
 
-    actual_lib->drawText({15, 15, "Use ARROWS to navigate & ENTER to start a game", Color::BLUE});
-    actual_lib->drawText({30, 16, "Press 'Q' to quit", Color::RED});
+    actual_lib->drawText({15 * CELL_W, 15 * CELL_H, "Use ARROWS to navigate & ENTER to start a game", Color::BLUE});
+    actual_lib->drawText({30 * CELL_W, 16 * CELL_H, "Press 'Q' to quit", Color::RED});
 }
 
 std::string display_menu(IDisplay *actual_lib, Input input)
@@ -120,45 +121,48 @@ std::string display_menu(IDisplay *actual_lib, Input input)
     if (input_handling_res != "") { return input_handling_res; }
 
     // Menu display
-    if (actual_lib->getName() == "SfmlLib")
-        sfmlMenuDisplay(actual_lib);
-    actual_lib->drawText({28, 2, "=== ARCADE MENU ===", Color::MAGENTA});
-
-    actual_lib->drawText({17, 5, "GRAPHICS LIBRARIES:", current_category == 0 ? Color::GREEN : Color::CYAN});
-    if (graphics_libs.empty())
-        actual_lib->drawText({19, 7, "No libs found...", Color::RED});
-    for (size_t i = 0; i < graphics_libs.size(); ++i) {
-        std::string prefix = (i == selected_graphic && current_category == 0) ? "[X] " : "[ ] ";
-        actual_lib->drawText({19, 7.0f + i, prefix + graphics_libs[i], Color::WHITE});
+    if (actual_lib->getName() == "SfmlLib") {
+        displayMenuWithCells(actual_lib);
     }
-
-    actual_lib->drawText({40, 5, "GAMES LIBRARIES:", current_category == 1 ? Color::GREEN : Color::CYAN});
-    if (games_libs.empty())
-        actual_lib->drawText({42, 7, "No games found...", Color::RED});
-    for (size_t i = 0; i < games_libs.size(); ++i) {
-        std::string prefix = (i == selected_game && current_category == 1) ? "[X] " : "[ ] ";
-        actual_lib->drawText({42, 7.0f + i, prefix + games_libs[i], Color::WHITE});
-    }
-
-    actual_lib->drawText({17, 10, "ENTER YOUR NAME:", current_category == 2 ? Color::GREEN : Color::YELLOW});
-    std::string display_name = "> " + actual_username;
-    if (current_category == 2) {
-        display_name.insert(name_cursor + 2, "[");
-        display_name.insert(name_cursor + 4, "]");
-    } else
-        display_name += "_";
-    actual_lib->drawText({19, 12, display_name, Color::GREEN});
-
-    actual_lib->drawText({40, 10, "LEADERBOARD:", Color::YELLOW});
-    auto scores = get_leaderboard_for_game(games_libs.empty() ? "" : games_libs[selected_game]);
-    if (scores.empty())
-        actual_lib->drawText({42, 12, "No scores yet.", Color::WHITE});
     else {
-        for (size_t i = 0; i < std::min(scores.size(), (size_t)5); ++i)
-            actual_lib->drawText({42, 12.0f + i, std::to_string(i + 1) + ". " + scores[i].first + " - " + std::to_string(scores[i].second), Color::WHITE});
-    }
+        actual_lib->drawText({28, 2, "=== ARCADE MENU ===", Color::MAGENTA});
 
-    actual_lib->drawText({15, 15, "Use ARROWS to navigate & ENTER to start a game", Color::BLUE});
-    actual_lib->drawText({30, 16, "Press 'Q' to quit", Color::RED});
+        actual_lib->drawText({17, 5, "GRAPHICS LIBRARIES:", current_category == 0 ? Color::GREEN : Color::CYAN});
+        if (graphics_libs.empty())
+            actual_lib->drawText({19, 7, "No libs found...", Color::RED});
+        for (size_t i = 0; i < graphics_libs.size(); ++i) {
+            std::string prefix = (i == selected_graphic && current_category == 0) ? "[X] " : "[ ] ";
+            actual_lib->drawText({19, 7.0f + i, prefix + graphics_libs[i], Color::WHITE});
+        }
+
+        actual_lib->drawText({40, 5, "GAMES LIBRARIES:", current_category == 1 ? Color::GREEN : Color::CYAN});
+        if (games_libs.empty())
+            actual_lib->drawText({42, 7, "No games found...", Color::RED});
+        for (size_t i = 0; i < games_libs.size(); ++i) {
+            std::string prefix = (i == selected_game && current_category == 1) ? "[X] " : "[ ] ";
+            actual_lib->drawText({42, 7.0f + i, prefix + games_libs[i], Color::WHITE});
+        }
+
+        actual_lib->drawText({17, 10, "ENTER YOUR NAME:", current_category == 2 ? Color::GREEN : Color::YELLOW});
+        std::string display_name = "> " + actual_username;
+        if (current_category == 2) {
+            display_name.insert(name_cursor + 2, "[");
+            display_name.insert(name_cursor + 4, "]");
+        } else
+            display_name += "_";
+        actual_lib->drawText({19, 12, display_name, Color::GREEN});
+
+        actual_lib->drawText({40, 10, "LEADERBOARD:", Color::YELLOW});
+        auto scores = get_leaderboard_for_game(games_libs.empty() ? "" : games_libs[selected_game]);
+        if (scores.empty())
+            actual_lib->drawText({42, 12, "No scores yet.", Color::WHITE});
+        else {
+            for (size_t i = 0; i < std::min(scores.size(), (size_t)5); ++i)
+                actual_lib->drawText({42, 12.0f + i, std::to_string(i + 1) + ". " + scores[i].first + " - " + std::to_string(scores[i].second), Color::WHITE});
+        }
+
+        actual_lib->drawText({15, 15, "Use ARROWS to navigate & ENTER to start a game", Color::BLUE});
+        actual_lib->drawText({30, 16, "Press 'Q' to quit", Color::RED});
+    }
     return "";
 }

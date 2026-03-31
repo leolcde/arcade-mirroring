@@ -15,11 +15,10 @@
 #include <chrono>
 #include <thread>
 #include <map>
-#include "../lib/Sfml.hpp"
 
-// cellule pour imité la ncurses, après faut faire des calcul. Ex: 40 * CELL_W ou 10 * CELL_H
-#define CELL_W 16.0f
-#define CELL_H 24.0f
+// Cell for resize when is any graphical library is not in terminal
+#define CELL_W 20.0f
+#define CELL_H 50.0f
 
 std::vector<std::string> get_libs_from_dir(const std::string &path);
 std::string display_menu(IDisplay *actual_lib, Input input);
