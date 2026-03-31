@@ -87,6 +87,9 @@ Input Sfml::getInput()
             return Input::EXIT;
     }
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        return Input::ACTION;
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         return Input::UP;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
