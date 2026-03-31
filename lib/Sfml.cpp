@@ -22,9 +22,7 @@ Sfml::~Sfml()
 void Sfml::init()
 {
     _window.create(sf::VideoMode(_width, _height), "Arcade");
-    _window.setFramerateLimit(13); // je sais si c'est la bonne manière de faire
-    if (!_texture.loadFromFile("assets/square.png"))
-        throw std::runtime_error("[ERROR]: Could not load texture");
+    _window.setFramerateLimit(60); // je sais si c'est la bonne manière de faire
     if (!_font.loadFromFile("assets/Bungee-Regular.ttf"))
         throw std::runtime_error("[ERROR]: Font not found");
 }
@@ -66,8 +64,24 @@ sf::Color getColorPair(Color color)
 
 void Sfml::drawEntity(const Entity& entity)
 {
+    if (!_texture.loadFromFile(entity.spritePath))
+    {
+        std::cerr << entity.spritePath << std::endl;
+        throw std::runtime_error("[ERROR ]: Could not load texture");
+    }
+
     _sprite.setTexture(_texture);
-    _sprite.setPosition(entity.x, entity.y);
+
+    if (entity.entChar == 'X' || entity.entChar == '@' || entity.entChar == '0' || entity.entChar == '*') {
+        sf::Vector2u texSize = _texture.getSize();
+        _sprite.setScale(
+            55.f / texSize.x,
+            85.f / texSize.y
+        );
+    } else {
+        _sprite.setScale(1.f, 1.f);
+    }
+    _sprite.setPosition(entity.x * 46.f, entity.y * 62.f);
     _window.draw(_sprite);
 }
 

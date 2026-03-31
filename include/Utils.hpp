@@ -43,6 +43,7 @@ enum class Color
 
 struct Entity
 {
+    // std::string name;
     float x;
     float y;
     float x_sfml;
