@@ -38,6 +38,7 @@ void Nibbler::init()
     Entity apple;
     apple.color = Color::RED;
     apple.entChar = '*';
+    apple.spritePath = "assets/apple.png";
     apple.x = dist_apple(gen);
     apple.y = dist_apple(gen);
     _gameEntities.push_back(apple);
@@ -46,11 +47,13 @@ void Nibbler::init()
     Entity newNibblerPart;
     newNibblerPart.color = Color::GREEN;
     newNibblerPart.entChar = '@';
+    newNibblerPart.spritePath = "assets/snake.png";
     newNibblerPart.x = dist_snake(gen);
     newNibblerPart.y = dist_snake(gen);
     _gameEntities.push_back(newNibblerPart);
     for (int i = 1; i <= 2; i++) {
         newNibblerPart.entChar = '0';
+        newNibblerPart.spritePath = "assets/snake.png";
         newNibblerPart.x = _gameEntities[1].x - i;
         newNibblerPart.y = _gameEntities[1].y;
         _gameEntities.push_back(newNibblerPart);
@@ -66,6 +69,7 @@ void Nibbler::init()
     Entity newWallPart;
     newWallPart.color = Color::BLUE;
     newWallPart.entChar = 'X';
+    newWallPart.spritePath = "assets/wall.jpg";
     for (int i = 0; i <= 16; i += 16) {
         for (int j = 0; j <= 32; j++) {
             newWallPart.x = j;
@@ -132,6 +136,7 @@ void Nibbler::addNibblerPart()
     Entity newNibblerPart;
     newNibblerPart.color = Color::GREEN;
     newNibblerPart.entChar = '0';
+    newNibblerPart.spritePath = "assets/snake.png";
     Entity lastNibblerPart = _gameEntities[_gameEntities.size() - 1];
     Entity penultimateNibblerPart = _gameEntities[_gameEntities.size() - 2];
     if (lastNibblerPart.y < penultimateNibblerPart.y) {
