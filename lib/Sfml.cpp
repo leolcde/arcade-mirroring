@@ -22,6 +22,7 @@ Sfml::~Sfml()
 void Sfml::init()
 {
     _window.create(sf::VideoMode(_width, _height), "Arcade");
+    _window.setFramerateLimit(13); // je sais si c'est la bonne manière de faire
     if (!_texture.loadFromFile("assets/square.png"))
         throw std::runtime_error("[ERROR]: Could not load texture");
     if (!_font.loadFromFile("assets/Bungee-Regular.ttf"))
