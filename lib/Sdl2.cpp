@@ -21,7 +21,7 @@
 
 static SDL_Color getColorPair(Color c);
 
-Sdl2::Sdl2() : _window(nullptr), _width(1500), _height(1000), _renderer(nullptr), _texture(nullptr), _font(nullptr)
+Sdl2::Sdl2() : _window(nullptr), _width(1500), _height(1000), _renderer(nullptr), _font(nullptr)
 {
     Sdl2::init();
 }
@@ -57,8 +57,6 @@ void Sdl2::stop()
 {
     TTF_CloseFont(_font);
     TTF_Quit();
-    SDL_DestroyTexture(_texture);
-    IMG_Quit();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();
@@ -82,16 +80,16 @@ void Sdl2::display()
 
 void Sdl2::drawEntity(const Entity &entity)
 {
-    SDL_Rect dst;
-
-    dst.x = static_cast<int>(entity.x_sfml);
-    dst.y = static_cast<int>(entity.y_sfml);
-    dst.h = 32;
-    dst.w = 32;
-
     SDL_Color c = getColorPair(entity.color);
-    SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
-    SDL_RenderCopy(_renderer, _texture, nullptr, &dst);
+    SDL_SetRenderDrawColor(_renderer, c.r, c.g, c.b, c.a);
+
+    SDL_Rect r;
+    r.x = (int)entity.x_sfml;
+    r.y = (int)entity.y_sfml;
+    r.w = 32;
+    r.h = 32;
+
+    SDL_RenderFillRect(_renderer, &r);
 }
 
 void Sdl2::drawText(const Text &text)
