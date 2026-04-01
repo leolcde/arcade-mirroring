@@ -19,7 +19,9 @@
 
 #include "Sdl2.hpp"
 
-Sdl2::Sdl2() : _window(nullptr), _renderer(nullptr), _texture(nullptr), _font(nullptr),  _width(1500), _height(1000)
+static SDL_Color getColorPair(Color c);
+
+Sdl2::Sdl2() : _window(nullptr), _width(1500), _height(1000), _renderer(nullptr), _texture(nullptr), _font(nullptr)
 {
     Sdl2::init();
 }
@@ -91,12 +93,41 @@ void Sdl2::display()
 
 void Sdl2::drawEntity(const Entity &entity)
 {
-    
+    SDL_Rect dst;
+
+    dst.x = static_cast<int>(entity.x_sfml);
+    dst.y = static_cast<int>(entity.y_sfml);
+    dst.h = 32;
+    dst.w = 32;
+
+    SDL_Color c = getColorPair(entity.color);
+    SDL_SetTextureColorMod(_texture, c.r, c.g, c.b);
+    SDL_RenderCopy(_renderer, _texture, nullptr, &dst);
 }
 
 void Sdl2::drawText(const Text &text)
 {
+    SDL_Color c = getColorPair(text.color);
+
+    SDL_Surface* surf = TTF_RenderUTF8_Blended(_font, text.text.c_str(), c);
+    if (!surf)
+        throw std::runtime_error(TTF_GetError());
     
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, surf);
+    if (!texture) {
+        SDL_FreeSurface(surf);
+        throw runtime_error(SDL_GetError());
+    }
+
+    SDL_Rect dst;
+    dst.x = static_cast<int>(text.x);
+    dst.y = static_cast<int>(text.y);
+    dst.h = surf->h;
+    dst.w = surf->w;
+
+    SDL_FreeSurface(surf);
+    SDL_RenderCopy(_renderer, texture, nullptr, &dst);
+    SDL_DestroyTexture(texture);
 }
 
 Input Sdl2::getInput()
@@ -128,6 +159,24 @@ Input Sdl2::getInput()
                 default: break;
             } 
         }
+    }
+
+    return Input::NONE;
+}
+
+SDL_Color getColorPair(Color c)
+{
+    switch (c) {
+        case Color::RED: return {255, 0, 0, 255};
+        case Color::GREEN: return {0, 255, 0, 255};
+        case Color::YELLOW: return {255, 255, 0, 255};
+        case Color::BLUE: return {0, 0, 255, 255};
+        case Color::MAGENTA: return {255, 0, 255, 255};
+        case Color::CYAN: return {0, 255, 255, 255};
+        case Color::WHITE: return {255, 255, 255, 255};
+        case Color::BLACK: return {0, 0, 0, 255};
+        case Color::DEFAULT:
+        default: return {255, 255, 255, 255};
     }
 }
 
