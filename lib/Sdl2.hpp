@@ -35,7 +35,6 @@ class Sdl2 : public IDisplay
         SDL_Renderer* _renderer;
         SDL_Texture* _texture;
         TTF_Font* _font;
-        SDL_Event _event;
 
     public:
         Sdl2();

@@ -80,12 +80,13 @@ std::string Sdl2::getName()
 
 void Sdl2::clear()
 {
-    
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    SDL_RenderClear(_renderer);
 }
 
 void Sdl2::display()
 {
-    
+   SDL_RenderPresent(_renderer);
 }
 
 void Sdl2::drawEntity(const Entity &entity)
@@ -96,4 +97,41 @@ void Sdl2::drawEntity(const Entity &entity)
 void Sdl2::drawText(const Text &text)
 {
     
+}
+
+Input Sdl2::getInput()
+{
+    SDL_Event e;
+
+    while (SDL_PollEvent(&e)) {
+    
+        if (e.type == SDL_QUIT)
+            return Input::EXIT;
+
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+    
+            switch (e.key.keysym.sym) {
+                case SDLK_KP_ENTER: return Input::ACTION;
+                case SDLK_UP: return Input::UP;
+                case SDLK_DOWN: return Input::DOWN;
+                case SDLK_LEFT: return Input::LEFT;
+                case SDLK_RIGHT: return Input::RIGHT;
+
+                case SDLK_1: return Input::PREV_LIB;
+                case SDLK_2: return Input::NEXT_LIB;
+                case SDLK_3: return Input::PREV_GAME;
+                case SDLK_4: return Input::NEXT_GAME;
+                
+                case SDLK_r: return Input::RESTART;
+                case SDLK_m: return Input::MENU;
+                case SDLK_q: return Input::EXIT;
+                default: break;
+            } 
+        }
+    }
+}
+
+extern "C" IDisplay *myEntryPoint()
+{
+    return new Sdl2();
 }
