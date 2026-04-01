@@ -19,8 +19,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <map>
-#include <iomanip>
 #include "../include/IDisplay.hpp"
 
 using namespace std;
