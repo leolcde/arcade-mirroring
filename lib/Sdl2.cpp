@@ -45,17 +45,6 @@ void Sdl2::init()
     if (_renderer == nullptr)
         throw runtime_error(SDL_GetError());
 
-    //load texture
-    if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) == 0)
-        throw runtime_error(IMG_GetError());
-    SDL_Surface* surf = IMG_Load("assets/square.png");
-    if (surf == nullptr)
-        throw runtime_error(SDL_GetError());
-    _texture = SDL_CreateTextureFromSurface(_renderer, surf);
-    SDL_FreeSurface(surf);
-    if (_texture == nullptr)
-        throw runtime_error(SDL_GetError());
-
     //load font
     if (TTF_Init() != 0)
         throw runtime_error(TTF_GetError());
