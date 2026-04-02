@@ -167,7 +167,12 @@ SDL_Color getColorPair(Color c)
     }
 }
 
-extern "C" IDisplay *myEntryPoint()
+extern "C" IDisplay *createEntryPoint()
 {
     return new Sdl2();
+}
+
+extern "C" void destroyEntryPoint(IDisplay *display)
+{
+    delete display;
 }

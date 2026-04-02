@@ -11,6 +11,9 @@
 #include <vector>
 #include <string>
 
+#define CELL_W 20.0f
+#define CELL_H 50.0f
+
 enum class Input
 {
     NONE = 0,
