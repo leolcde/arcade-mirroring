@@ -19,7 +19,9 @@
 
 #include "Sdl2.hpp"
 
-Sdl2::Sdl2() : _window(nullptr), _renderer(nullptr), _texture(nullptr), _font(nullptr),  _width(1500), _height(1000)
+static SDL_Color getColorPair(Color c);
+
+Sdl2::Sdl2() : _window(nullptr), _width(1500), _height(1000), _renderer(nullptr), _font(nullptr)
 {
     Sdl2::init();
 }
@@ -43,17 +45,6 @@ void Sdl2::init()
     if (_renderer == nullptr)
         throw runtime_error(SDL_GetError());
 
-    //load texture
-    if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) == 0)
-        throw runtime_error(IMG_GetError());
-    SDL_Surface* surf = IMG_Load("assets/square.png");
-    if (surf == nullptr)
-        throw runtime_error(SDL_GetError());
-    _texture = SDL_CreateTextureFromSurface(_renderer, surf);
-    SDL_FreeSurface(surf);
-    if (_texture == nullptr)
-        throw runtime_error(SDL_GetError());
-
     //load font
     if (TTF_Init() != 0)
         throw runtime_error(TTF_GetError());
@@ -66,8 +57,6 @@ void Sdl2::stop()
 {
     TTF_CloseFont(_font);
     TTF_Quit();
-    SDL_DestroyTexture(_texture);
-    IMG_Quit();
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();
@@ -80,20 +69,105 @@ std::string Sdl2::getName()
 
 void Sdl2::clear()
 {
-    
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    SDL_RenderClear(_renderer);
 }
 
 void Sdl2::display()
 {
-    
+   SDL_RenderPresent(_renderer);
 }
 
 void Sdl2::drawEntity(const Entity &entity)
 {
-    
+    SDL_Color c = getColorPair(entity.color);
+    SDL_SetRenderDrawColor(_renderer, c.r, c.g, c.b, c.a);
+
+    SDL_Rect r;
+    r.x = (int)entity.x_sfml;
+    r.y = (int)entity.y_sfml;
+    r.w = 32;
+    r.h = 32;
+
+    SDL_RenderFillRect(_renderer, &r);
 }
 
 void Sdl2::drawText(const Text &text)
 {
+    SDL_Color c = getColorPair(text.color);
+
+    SDL_Surface* surf = TTF_RenderUTF8_Blended(_font, text.text.c_str(), c);
+    if (!surf)
+        throw std::runtime_error(TTF_GetError());
     
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, surf);
+    if (!texture) {
+        SDL_FreeSurface(surf);
+        throw runtime_error(SDL_GetError());
+    }
+
+    SDL_Rect dst;
+    dst.x = static_cast<int>(text.x);
+    dst.y = static_cast<int>(text.y);
+    dst.h = surf->h;
+    dst.w = surf->w;
+
+    SDL_FreeSurface(surf);
+    SDL_RenderCopy(_renderer, texture, nullptr, &dst);
+    SDL_DestroyTexture(texture);
+}
+
+Input Sdl2::getInput()
+{
+    SDL_Event e;
+
+    while (SDL_PollEvent(&e)) {
+    
+        if (e.type == SDL_QUIT)
+            return Input::EXIT;
+
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+    
+            switch (e.key.keysym.sym) {
+                case SDLK_KP_ENTER: return Input::ACTION;
+                case SDLK_UP: return Input::UP;
+                case SDLK_DOWN: return Input::DOWN;
+                case SDLK_LEFT: return Input::LEFT;
+                case SDLK_RIGHT: return Input::RIGHT;
+
+                case SDLK_1: return Input::PREV_LIB;
+                case SDLK_2: return Input::NEXT_LIB;
+                case SDLK_3: return Input::PREV_GAME;
+                case SDLK_4: return Input::NEXT_GAME;
+                
+                case SDLK_r: return Input::RESTART;
+                case SDLK_m: return Input::MENU;
+                case SDLK_q: return Input::EXIT;
+                default: break;
+            } 
+        }
+    }
+
+    return Input::NONE;
+}
+
+SDL_Color getColorPair(Color c)
+{
+    switch (c) {
+        case Color::RED: return {255, 0, 0, 255};
+        case Color::GREEN: return {0, 255, 0, 255};
+        case Color::YELLOW: return {255, 255, 0, 255};
+        case Color::BLUE: return {0, 0, 255, 255};
+        case Color::MAGENTA: return {255, 0, 255, 255};
+        case Color::CYAN: return {0, 255, 255, 255};
+        case Color::WHITE: return {255, 255, 255, 255};
+        case Color::BLACK: return {0, 0, 0, 255};
+        case Color::DEFAULT:
+        default: return {255, 255, 255, 255};
+    }
+}
+
+extern "C" IDisplay *myEntryPoint()
+{
+    return new Sdl2();
 }

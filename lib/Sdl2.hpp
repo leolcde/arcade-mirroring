@@ -19,9 +19,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
-#include <map>
-#include <iomanip>
 #include "../include/IDisplay.hpp"
 
 using namespace std;
@@ -33,9 +30,7 @@ class Sdl2 : public IDisplay
         int _width;
         int _height;
         SDL_Renderer* _renderer;
-        SDL_Texture* _texture;
         TTF_Font* _font;
-        SDL_Event _event;
 
     public:
         Sdl2();
