@@ -10,8 +10,10 @@ make
 ## Games :
 - Snake
 - Nibbler
+- Pacman
 
 ## Libs :
 - Ncurses
 - Sfml
+- Sdl2
 - LibCaca

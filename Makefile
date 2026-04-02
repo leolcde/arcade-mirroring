@@ -26,12 +26,15 @@ SFML_OBJ		= $(SFML_SRC:.cpp=.o)
 SDL2_SRC		= lib/Sdl2.cpp
 SDL2_OBJ		= $(SDL2_SRC:.cpp=.o)
 
-GAMES_LIBS		= arcade_snake.so arcade_nibbler.so
+GAMES_LIBS		= arcade_snake.so arcade_nibbler.so arcade_pacman.so
 
 SNAKE_SRC		= lib/Snake.cpp
 SNAKE_OBJ		= $(SNAKE_SRC:.cpp=.o)
 NIBBLER_SRC		= lib/Nibbler.cpp
 NIBBLER_OBJ		= $(NIBBLER_SRC:.cpp=.o)
+PACMAN_SRC		= lib/Pacman.cpp
+PACMAN_OBJ		= $(PACMAN_SRC:.cpp=.o)
+
 
 all: core graphicals games
 
@@ -61,6 +64,9 @@ lib/arcade_snake.so: $(SNAKE_OBJ)
 
 lib/arcade_nibbler.so: $(NIBBLER_OBJ)
 	$(C) $(CFLAGS) -shared -o $@ $(NIBBLER_OBJ)
+
+lib/arcade_pacman.so: $(PACMAN_OBJ)
+	$(C) $(CFLAGS) -shared -o $@ $(PACMAN_OBJ)
 
 %.o: %.cpp
 	$(C) $(CFLAGS) -c -o $@ $<
