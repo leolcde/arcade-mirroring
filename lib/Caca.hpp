@@ -12,8 +12,6 @@
 #include "../include/IDisplay.hpp"
 #include <caca.h>
 
-using namespace std;
-
 class Caca : public IDisplay
 {
     private:

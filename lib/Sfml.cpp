@@ -3,21 +3,15 @@
 ** File     : Sfml.cpp
 ** Path     : lib/games
 ** Date     : 3/26/26  3:09PM
-** 
+**
 ** Made by Léo Lacordaire
 */
 
 #include "Sfml.hpp"
 
-Sfml::Sfml() : _width(1500), _height(1000)
-{
-    Sfml::init();
-}
+Sfml::Sfml() : _width(1500), _height(1000) {}
 
-Sfml::~Sfml()
-{
-    Sfml::stop();
-}
+Sfml::~Sfml() { Sfml::stop(); }
 
 void Sfml::init()
 {
@@ -132,7 +126,13 @@ Input Sfml::getInput()
     return Input::NONE;
 }
 
-extern "C" IDisplay *myEntryPoint()
+// Others
+extern "C" IDisplay *createEntryPoint()
 {
     return new Sfml();
+}
+
+extern "C" void destroyEntryPoint(IDisplay *display)
+{
+    delete display;
 }

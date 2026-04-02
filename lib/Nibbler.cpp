@@ -14,15 +14,9 @@ static std::mt19937 gen(rd());
 static std::uniform_int_distribution<> dist_snake(5, 10);
 static std::uniform_int_distribution<> dist_apple(1, 15);
 
-Nibbler::Nibbler()
-{
-    Nibbler::init();
-}
+Nibbler::Nibbler() {}
 
-Nibbler::~Nibbler()
-{
-    Nibbler::stop();
-}
+Nibbler::~Nibbler() { Nibbler::stop(); }
 
 void Nibbler::init()
 {
@@ -216,7 +210,12 @@ bool Nibbler::isGameOver() { return _isGameOver; }
 
 
 // Others
-extern "C" IGame *myEntryPoint()
+extern "C" IGame *createEntryPoint()
 {
     return new Nibbler();
+}
+
+extern "C" void destroyEntryPoint(IGame *game)
+{
+    delete game;
 }

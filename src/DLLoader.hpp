@@ -32,10 +32,24 @@ class DLLoader {
 
         T *getInstance()
         {
-            T *(*entryPointFunc)() = reinterpret_cast<T *(*)()>(dlsym(handle, "myEntryPoint"));
-            if (dlerror() != NULL)
+            if (handle == NULL)
                 return NULL;
-            return entryPointFunc();
+            T *(*createEntryPointFunc)() = reinterpret_cast<T *(*)()>(dlsym(handle, "createEntryPoint"));
+            if (createEntryPointFunc == NULL)
+                return NULL;
+            return createEntryPointFunc();
+        }
+
+        void destroyInstance(T *actual_lib)
+        {
+            if (handle == NULL)
+                return;
+            void (*destroyEntryPointFunc)(T *) = reinterpret_cast<void (*)(T *)>(dlsym(handle, "destroyEntryPoint"));
+            if (destroyEntryPointFunc == NULL) {
+                std::cout << "[ERROR]: failed to destroy entity" << std::endl;
+                return;
+            }
+            destroyEntryPointFunc(actual_lib);
         }
 
 };

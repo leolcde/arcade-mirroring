@@ -5,3 +5,5 @@ todo.txt
 *.so
 .idea
 testGTK
+.vscode
+lib_other_group

@@ -9,21 +9,15 @@
 
 #include "Caca.hpp"
 
-Caca::Caca() : _window(NULL), _canvas(NULL)
-{
-    Caca::init();
-}
+Caca::Caca() : _window(NULL), _canvas(NULL) {}
 
-Caca::~Caca()
-{
-    Caca::stop();
-}
+Caca::~Caca() { Caca::stop(); }
 
 void Caca::init()
 {
     _window = caca_create_display(NULL);
     if (_window == NULL) {
-        cout << "[ERROR]: cannot create window" << endl;
+        std::cout << "[ERROR]: cannot create window" << std::endl;
         return;
     }
 
@@ -101,7 +95,13 @@ Input Caca::getInput()
 
 }
 
-extern "C" IDisplay *myEntryPoint()
+// Others
+extern "C" IDisplay *createEntryPoint()
 {
     return new Caca();
+}
+
+extern "C" void destroyEntryPoint(IDisplay *display)
+{
+    delete display;
 }

@@ -11,7 +11,7 @@ int main(int ac, char **av)
 {
     bool gameInProgress = false;
     IDisplay *actual_lib;
-    DLLoader<IGame>* game_loader = nullptr;
+    DLLoader<IGame> *game_loader = nullptr;
     IGame *actual_game;
 
     if (ac != 2) {
@@ -25,6 +25,7 @@ int main(int ac, char **av)
         std::cerr << "Error: invalid library" << std::endl;
         return 84;
     }
+    actual_lib->init();
 
     while (true) {
         actual_lib->clear();
@@ -37,6 +38,7 @@ int main(int ac, char **av)
                 game_loader = new DLLoader<IGame>(game_name.c_str());
                 actual_game = game_loader->getInstance();
                 if (actual_game != NULL) {
+                    actual_game->init();
                     gameInProgress = true;
                 } else {
                     delete game_loader;
@@ -50,7 +52,7 @@ int main(int ac, char **av)
             if (game_score != -1) {
                 std::ofstream file("data/scores", std::ios::app);
                 file << actual_game->getName() << " " << actual_username << " " << game_score << "\n";
-                delete actual_game;
+                game_loader->destroyInstance(actual_game);
                 delete game_loader;
                 gameInProgress = false;
             }
@@ -58,6 +60,6 @@ int main(int ac, char **av)
         actual_lib->display();
         std::this_thread::sleep_for(std::chrono::milliseconds(33));
     }
-    delete actual_lib;
+    lib_loader.destroyInstance(actual_lib);
     return 0;
 }

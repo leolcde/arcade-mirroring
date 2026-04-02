@@ -7,15 +7,9 @@
 
 #include "NCurses.hpp"
 
-NCurses::NCurses() : _window(NULL), _cursor(0)
-{
-    NCurses::init();
-}
+NCurses::NCurses() : _window(NULL), _cursor(0) {}
 
-NCurses::~NCurses()
-{
-    NCurses::stop();
-}
+NCurses::~NCurses() { NCurses::stop(); }
 
 void NCurses::init()
 {
@@ -119,7 +113,12 @@ Input NCurses::getInput()
 }
 
 // Others
-extern "C" IDisplay *myEntryPoint()
+extern "C" IDisplay *createEntryPoint()
 {
     return new NCurses();
+}
+
+extern "C" void destroyEntryPoint(IDisplay *display)
+{
+    delete display;
 }

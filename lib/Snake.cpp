@@ -12,7 +12,7 @@ static std::mt19937 gen(rd());
 static std::uniform_int_distribution<> dist_snake(5, 10);
 static std::uniform_int_distribution<> dist_apple(1, 15);
 
-Snake::Snake() { Snake::init(); }
+Snake::Snake() {}
 
 Snake::~Snake() { Snake::stop(); }
 
@@ -175,9 +175,13 @@ int Snake::getScore() { return _score; }
 
 bool Snake::isGameOver() { return _isGameOver; }
 
-
 // Others
-extern "C" IGame *myEntryPoint()
+extern "C" IGame *createEntryPoint()
 {
     return new Snake();
+}
+
+extern "C" void destroyEntryPoint(IGame *game)
+{
+    delete game;
 }
