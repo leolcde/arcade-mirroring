@@ -1,9 +1,9 @@
-arcade
-data
-todo.txt
 *.o
 *.so
+*.txt
+arcade
+data
 .idea
-testGTK
 .vscode
+testGTK
 lib_other_group

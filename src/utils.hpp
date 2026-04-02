@@ -16,10 +16,6 @@
 #include <thread>
 #include <map>
 
-// Cell for resize when is any graphical library is not in terminal
-#define CELL_W 20.0f
-#define CELL_H 50.0f
-
 std::vector<std::string> get_libs_from_dir(const std::string &path);
 std::string display_menu(IDisplay *actual_lib, Input input);
 int launch_game(Input input, IGame *actual_game, IDisplay *actual_lib);
