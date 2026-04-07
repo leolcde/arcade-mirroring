@@ -16,7 +16,7 @@ Sfml::~Sfml() { Sfml::stop(); }
 void Sfml::init()
 {
     _window.create(sf::VideoMode(_width, _height), "Arcade");
-    _window.setFramerateLimit(60); // je sais si c'est la bonne manière de faire
+    _window.setFramerateLimit(60);
     if (!_font.loadFromFile("assets/Bungee-Regular.ttf"))
         throw std::runtime_error("[ERROR]: Font not found");
 }
@@ -33,6 +33,7 @@ std::string Sfml::getName()
 
 void Sfml::clear()
 {
+    _dt = _clock.restart().asSeconds();
     _window.clear(sf::Color::Black);
 }
 
@@ -94,35 +95,24 @@ Input Sfml::getInput()
     while (_window.pollEvent(_event)) {
         if (_event.type == sf::Event::Closed)
             return Input::EXIT;
+        if (_event.type == sf::Event::KeyPressed) {
+            switch (_event.key.code) {
+            case sf::Keyboard::Enter:  return Input::ACTION;
+            case sf::Keyboard::Up:     return Input::UP;
+            case sf::Keyboard::Down:   return Input::DOWN;
+            case sf::Keyboard::Left:   return Input::LEFT;
+            case sf::Keyboard::Right:  return Input::RIGHT;
+            case sf::Keyboard::Num1:   return Input::PREV_LIB;
+            case sf::Keyboard::Num2:   return Input::NEXT_LIB;
+            case sf::Keyboard::Num3:   return Input::PREV_GAME;
+            case sf::Keyboard::Num4:   return Input::NEXT_GAME;
+            case sf::Keyboard::R:      return Input::RESTART;
+            case sf::Keyboard::M:      return Input::MENU;
+            case sf::Keyboard::Q:      return Input::EXIT;
+            default: break;
+            }
+        }
     }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-        return Input::ACTION;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        return Input::UP;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        return Input::DOWN;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        return Input::LEFT;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        return Input::RIGHT;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-        return Input::PREV_LIB;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-        return Input::NEXT_LIB;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-        return Input::PREV_GAME;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-        return Input::NEXT_GAME;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-        return Input::RESTART;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
-        return Input::MENU;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-        return Input::EXIT;
-
     return Input::NONE;
 }
 

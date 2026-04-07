@@ -24,6 +24,8 @@ class Sfml : public IDisplay
         sf::Texture _texture;
         sf::Sprite _sprite;
         sf::Event _event;
+        sf::Clock _clock;
+        float _dt;
         int _width;
         int _height;
 
