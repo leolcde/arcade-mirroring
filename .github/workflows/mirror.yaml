@@ -9,6 +9,8 @@ on:
 jobs:
   mirror:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout full history
         uses: actions/checkout@v4
@@ -16,10 +18,21 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Validate mirror token
+        env:
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          if [ -z "$MIRROR_TOKEN" ]; then
+            echo "MIRROR_TOKEN is empty"
+            exit 1
+          fi
+
       - name: Push to mirror repo
         env:
           MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git push --mirror https://x-access-token:${MIRROR_TOKEN}@github.com/leolcde/arcade-mirroring.git
+          git push --prune https://x-access-token:${MIRROR_TOKEN}@github.com/leolcde/arcade-mirroring.git \
+            +refs/heads/*:refs/heads/* \
+            +refs/tags/*:refs/tags/*
