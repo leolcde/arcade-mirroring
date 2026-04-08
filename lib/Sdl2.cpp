@@ -129,6 +129,7 @@ Input Sdl2::getInput()
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
     
             switch (e.key.keysym.sym) {
+                case SDLK_RETURN:
                 case SDLK_KP_ENTER: return Input::ACTION;
                 case SDLK_UP: return Input::UP;
                 case SDLK_DOWN: return Input::DOWN;

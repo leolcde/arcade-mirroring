@@ -69,11 +69,14 @@ int main(int ac, char **av)
         // Afficher le jeu tant que pas de GameOver sinon remettre le menu
         if (gameInProgress == true) {
             int game_score = launch_game(input, actual_game, actual_lib);
-            if (game_score != -1 && game_score > 5) {
-                std::ofstream file("data/scores", std::ios::app);
-                file << actual_game_name << " " << actual_username << " " << game_score << "\n";
+            if (game_score != -1) {
+                if (game_score > 5) {
+                    std::ofstream file("data/scores", std::ios::app);
+                    file << actual_game_name << " " << actual_username << " " << game_score << "\n";
+                }
                 game_loader->destroyInstance(actual_game);
                 delete game_loader;
+                game_loader = nullptr;
                 gameInProgress = false;
             }
         }
