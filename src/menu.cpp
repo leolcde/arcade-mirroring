@@ -31,6 +31,7 @@ std::vector<std::pair<std::string, int>> get_leaderboard_for_game(const std::str
 std::string input_handling(Input input)
 {
     std::string selected_game_file = "./lib/arcade_" +  games_libs[selected_game] + ".so";
+    std::string selected_graphic_file = "./lib/arcade_" +  graphics_libs[selected_graphic] + ".so";
 
     switch (input) {
         case Input::DOWN:
@@ -64,8 +65,19 @@ std::string input_handling(Input input)
             }
             break;
         case Input::ACTION:
-            if (current_category == 1) { return games_libs.empty() ? "None" : selected_game_file; }
+            if (current_category == 1) { last_menu_selection = "game"; actual_game_name = games_libs.empty() ? "" : games_libs[selected_game]; return games_libs.empty() ? "None" : selected_game_file; }
+            if (current_category == 0) { last_menu_selection = "graphic"; return graphics_libs.empty() ? "None" : selected_graphic_file; }
             break;
+        case Input::NEXT_LIB:
+            if (graphics_libs.empty()) return "None";
+            selected_graphic = (selected_graphic + 1) % graphics_libs.size();
+            last_menu_selection = "graphic";
+            return "./lib/arcade_" + graphics_libs[selected_graphic] + ".so";
+        case Input::PREV_LIB:
+            if (graphics_libs.empty()) return "None";
+            selected_graphic = (selected_graphic == 0) ? graphics_libs.size() - 1 : selected_graphic - 1;
+            last_menu_selection = "graphic";
+            return "./lib/arcade_" + graphics_libs[selected_graphic] + ".so";
         default:
             break;
     }

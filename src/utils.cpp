@@ -7,6 +7,12 @@
 
 #include "utils.hpp"
 
+std::vector<std::string> graphics_libs = {"ncurses", "libcaca", "sfml", "sdl2"};
+std::vector<std::string> games_libs = {"snake", "nibbler"};
+std::string actual_username = "guest";
+std::string last_menu_selection = "";
+std::string actual_game_name = "";
+
 std::vector<std::string> get_libs_from_dir(const std::string &path)
 {
     std::vector<std::string> libs;
