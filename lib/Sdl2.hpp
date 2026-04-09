@@ -21,8 +21,6 @@
 #include <SDL2/SDL_ttf.h>
 #include "../include/IDisplay.hpp"
 
-using namespace std;
-
 class Sdl2 : public IDisplay
 {
     private:

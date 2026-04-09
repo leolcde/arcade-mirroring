@@ -35,22 +35,22 @@ void Sdl2::init()
 {
     //load window
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
-        throw runtime_error(SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
     _window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _width, _height, SDL_WINDOW_SHOWN);
     if (_window == nullptr)
-        throw runtime_error(SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
 
     //load renderer
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (_renderer == nullptr)
-        throw runtime_error(SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
 
     //load font
     if (TTF_Init() != 0)
-        throw runtime_error(TTF_GetError());
+        throw std::runtime_error(TTF_GetError());
     _font =  TTF_OpenFont("assets/Bungee-Regular.ttf", 24);
     if (_font == nullptr)
-        throw runtime_error(TTF_GetError());
+        throw std::runtime_error(TTF_GetError());
 }
 
 void Sdl2::stop()
@@ -99,11 +99,11 @@ void Sdl2::drawText(const Text &text)
     SDL_Surface* surf = TTF_RenderUTF8_Blended(_font, text.text.c_str(), c);
     if (!surf)
         throw std::runtime_error(TTF_GetError());
-    
+
     SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, surf);
     if (!texture) {
         SDL_FreeSurface(surf);
-        throw runtime_error(SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
     }
 
     SDL_Rect dst;
@@ -122,12 +122,12 @@ Input Sdl2::getInput()
     SDL_Event e;
 
     while (SDL_PollEvent(&e)) {
-    
+
         if (e.type == SDL_QUIT)
             return Input::EXIT;
 
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-    
+
             switch (e.key.keysym.sym) {
                 case SDLK_RETURN:
                 case SDLK_KP_ENTER: return Input::ACTION;
@@ -140,12 +140,12 @@ Input Sdl2::getInput()
                 case SDLK_2: return Input::NEXT_LIB;
                 case SDLK_3: return Input::PREV_GAME;
                 case SDLK_4: return Input::NEXT_GAME;
-                
+
                 case SDLK_r: return Input::RESTART;
                 case SDLK_m: return Input::MENU;
                 case SDLK_q: return Input::EXIT;
                 default: break;
-            } 
+            }
         }
     }
 

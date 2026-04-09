@@ -6,6 +6,7 @@
 */
 
 #include "DLLoader.hpp"
+// #include "include/IGame.hpp"
 #include <vector>
 #include <string>
 #include <dirent.h>
@@ -22,10 +23,12 @@
 
 std::vector<std::string> get_libs_from_dir(const std::string &path);
 std::string display_menu(IDisplay *actual_lib, Input input);
-int launch_game(Input input, IGame *actual_game, IDisplay *actual_lib);
+std::string run_game(Input input, IGame *actual_game, IDisplay *actual_lib);
 
 extern std::vector<std::string> graphics_libs;
 extern std::vector<std::string> games_libs;
+extern std::map<std::string, IGame *> games_states;
+extern std::string actual_game_name;
 extern std::string actual_username;
 extern std::string last_menu_selection;
-extern std::string actual_game_name;
+
