@@ -1,0 +1,35 @@
+name: Continuous Integration
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            g++ \
+            make \
+            libncurses5-dev \
+            libcaca-dev \
+            libsfml-dev \
+            libsdl2-dev \
+            libsdl2-ttf-dev
+
+      - name: Build all targets
+        run: make
+
+      - name: Ensure clean rebuild works
+        run: |
+          make fclean
+          make
