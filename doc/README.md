@@ -33,8 +33,17 @@ A major goal of the Arcade project is compatibility with other groups. This is a
 
 **Dependencies for graphics libraries:**
 ```bash
+# SDL2
 sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
-# Additional dependencies for SFML, Ncurses, and LibCaca may be required depending on your OS.
+
+# SFML
+sudo apt install libsfml-dev
+
+# Ncurses
+sudo apt install libncurses5-dev libncursesw5-dev
+
+# LibCaca
+sudo apt install libcaca-dev
 ```
 
 **Compilation:**
@@ -122,3 +131,68 @@ extern "C" {
 }
 ```
 In your implementation, map your specific library's behaviors (e.g., drawing rects, handling keyboard events) to Arcade's generic `Entity`, `Text`, and `Input` structures. Compile this into a shared object (e.g., `arcade_mydisplay.so`).
+
+---
+
+## 3. Class Diagram & Architecture
+
+To help you understand the architecture of our Arcade project, here is a class diagram detailing relationships between core logic, interfaces, and shared libraries.
+
+```mermaid
+classDiagram
+    class Core {
+        -DLLoader _gameLoader
+        -DLLoader _displayLoader
+        -IGame* _currentGame
+        -IDisplay* _currentDisplay
+        +init()
+        +run()
+        +switchGame(path)
+        +switchDisplay(path)
+    }
+
+    class DLLoader {
+        -void* _handle
+        +open(string path)
+        +getSymbol(string symbol) void*
+        +close()
+    }
+
+    class IGame {
+        <<interface>>
+        +init() void
+        +stop() void
+        +getName() string
+        +update(Input input) void
+        +getEntities() vector~Entity~
+        +getTexts() vector~Text~
+        +getScore() int
+        +isGameOver() bool
+    }
+
+    class IDisplay {
+        <<interface>>
+        +init() void
+        +stop() void
+        +getName() string
+        +clear() void
+        +display() void
+        +drawEntity(Entity entity) void
+        +drawText(Text text) void
+        +getInput() Input
+    }
+
+    Core --> DLLoader : Instantiates & Uses
+    DLLoader --> IGame : Loads & Resolves
+    DLLoader --> IDisplay : Loads & Resolves
+    GameLibrary ..|> IGame : Implements
+    DisplayLibrary ..|> IDisplay : Implements
+```
+
+### Explanatory Manual: How procedures are linked
+
+- **Initialization**: When the `./arcade` binary is executed, the `Core` is initialized. The `Core` uses an instance of `DLLoader` to locate and load the default graphical library (e.g., `ncurses`) via the path provided as the first argument in the command line.
+- **Dynamic Loading**: `DLLoader` wraps the `dlopen`, `dlsym`, and `dlclose` functions. It uses `dlsym` to grab the `entryPoint()` function from the loaded `.so` file. The `entryPoint()` acts as a factory, returning a pointer to the fully instantiated `IDisplay` or `IGame` object.
+- **The Main Loop**: During the main loop, `Core` calls `_currentDisplay->getInput()`. It passes this input to `_currentGame->update(input)` so the game can process logic (movement, collisions, game over states).
+- **Rendering Pipeline**: After updating the game logic, `Core` clears the screen with `_currentDisplay->clear()`. It then retrieves all visible elements via `_currentGame->getEntities()` and `_currentGame->getTexts()`. For each element, `Core` calls `_currentDisplay->drawEntity()` or `drawText()`, and finally calls `_currentDisplay->display()` to push the frame to the screen.
+- **Switching Libraries**: When a hotkey is pressed to switch a library, the `Core` uses `DLLoader::close()` to safely unload the current `.so` file, and uses `DLLoader::open()` to instantly swap in the next requested module, maintaining a continuous game/render session without terminating.

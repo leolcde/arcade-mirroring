@@ -22,7 +22,7 @@ void NCurses::init()
     start_color();
     mousemask(BUTTON1_CLICKED, NULL);
 
-    printf("\033[?1000h\n");
+    std::cout << "\033[?1000h\n";
 
     // Couleurs des thèmes
     init_pair(1, 220, 18); // Main theme
