@@ -95,8 +95,8 @@ void Nibbler::init()
     for (int j = 12; j <= 20; j++) { newWallPart.x = j; newWallPart.y = 8;  _wallsEntities.push_back(newWallPart); }
     for (int i = 4;  i <= 12;  i++) { newWallPart.x = 16; newWallPart.y = i; _wallsEntities.push_back(newWallPart); }
 
-	// Verify apple not generate on walls
-	while (entityOnWall(_gameEntities[0])) {
+	// Verify apple not generate on walls or snake
+	while (entityOnWall(_gameEntities[0]) || entityOnNibbler(_gameEntities[0])) {
     	_gameEntities[0].x = dist_apple(gen);
     	_gameEntities[0].y = dist_apple(gen);
 	}
@@ -188,7 +188,9 @@ void Nibbler::update(Input input)
         _texts[0].text = score_text;
         addNibblerPart();
         // Generate new apple
-        while (entityOnNibbler(_gameEntities[0])) {
+        _gameEntities[0].x = dist_apple(gen);
+        _gameEntities[0].y = dist_apple(gen);
+        while (entityOnNibbler(_gameEntities[0]) || entityOnWall(_gameEntities[0])) {
             _gameEntities[0].x = dist_apple(gen);
             _gameEntities[0].y = dist_apple(gen);
         }
