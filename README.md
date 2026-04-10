@@ -33,8 +33,17 @@ A major goal of the Arcade project is compatibility with other groups. This is a
 
 **Dependencies for graphics libraries:**
 ```bash
+# SDL2
 sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
-# Additional dependencies for SFML, Ncurses, and LibCaca may be required depending on your OS.
+
+# SFML
+sudo apt install libsfml-dev
+
+# Ncurses
+sudo apt install libncurses5-dev libncursesw5-dev
+
+# LibCaca
+sudo apt install libcaca-dev
 ```
 
 **Compilation:**
