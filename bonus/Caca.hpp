@@ -10,7 +10,7 @@
 #pragma once
 
 #include "../include/IDisplay.hpp"
-#include "caca.h"
+#include <caca.h>
 
 class Caca : public IDisplay
 {

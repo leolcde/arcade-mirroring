@@ -6,6 +6,7 @@ data
 .idea
 .vscode
 testGTK
-lib_other_group
+lib_other_group1
+lib_other_group2
 debug.log
 .GEMINI

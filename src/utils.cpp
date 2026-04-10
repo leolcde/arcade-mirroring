@@ -8,7 +8,7 @@
 #include "utils.hpp"
 
 std::vector<std::string> graphics_libs = {"ncurses", "libcaca", "sfml", "sdl2"};
-std::vector<std::string> games_libs = {"snake", "nibbler"};
+std::vector<std::string> games_libs = {"snake", "nibbler", "wordle"};
 std::map<std::string, IGame *> games_states = {};
 std::string actual_game_name = "";
 std::string actual_username = "guest";
