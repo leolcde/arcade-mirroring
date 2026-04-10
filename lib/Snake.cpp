@@ -133,8 +133,16 @@ void Snake::addSnakePart()
 
 void Snake::update(Input input)
 {
-    if (input == Input::UP || input == Input::DOWN || input == Input::LEFT || input == Input::RIGHT)
+    // Dont change input if it make snake die
+    if (input == Input::UP && _lastInput != Input::DOWN)
         _lastInput = input;
+    else if (input == Input::DOWN && _lastInput != Input::UP)
+        _lastInput = input;
+    else if (input == Input::LEFT && _lastInput != Input::RIGHT)
+        _lastInput = input;
+    else if (input == Input::RIGHT && _lastInput != Input::LEFT)
+        _lastInput = input;
+
     if (_lastInput == Input::NONE || _lastInput == Input::ACTION)
         return;
 
