@@ -18,7 +18,7 @@ void Sfml::init()
     _window.create(sf::VideoMode(_width, _height), "Arcade");
     _window.setFramerateLimit(60);
     if (!_font.loadFromFile("assets/Bungee-Regular.ttf"))
-        throw std::runtime_error("[ERROR]: Font not found");
+        throw std::runtime_error("Font not found");
 }
 
 void Sfml::stop()
@@ -62,7 +62,7 @@ void Sfml::drawEntity(const Entity& entity)
     if (!_texture.loadFromFile(entity.spritePath))
     {
         std::cerr << entity.spritePath << std::endl;
-        throw std::runtime_error("[ERROR ]: Could not load texture");
+        throw std::runtime_error("Could not load texture");
     }
 
     _sprite.setTexture(_texture);

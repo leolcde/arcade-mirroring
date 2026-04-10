@@ -6,7 +6,6 @@
 */
 
 #include "DLLoader.hpp"
-// #include "include/IGame.hpp"
 #include <vector>
 #include <string>
 #include <dirent.h>

@@ -45,10 +45,8 @@ class DLLoader {
             if (handle == NULL)
                 return;
             void (*destroyEntryPointFunc)(T *) = reinterpret_cast<void (*)(T *)>(dlsym(handle, "destroyEntryPoint"));
-            if (destroyEntryPointFunc == NULL) {
-                std::cout << "[ERROR]: failed to destroy entity" << std::endl;
-                return;
-            }
+            if (destroyEntryPointFunc == NULL)
+                throw std::runtime_error("Failed to destroy entity");
             destroyEntryPointFunc(actual_lib);
         }
 

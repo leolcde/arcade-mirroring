@@ -17,11 +17,9 @@ void Caca::init()
 {
     _window = caca_create_display(NULL);
     if (_window == NULL) {
-        std::cout << "[ERROR]: cannot create window" << std::endl;
         _canvas = NULL;
-        return;
+        throw std::runtime_error("Cannot create window");
     }
-
     _canvas = caca_get_canvas(_window);
     caca_set_display_title(_window, "Arcacade Project");
 }

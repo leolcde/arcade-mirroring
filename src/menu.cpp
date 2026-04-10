@@ -125,12 +125,12 @@ std::string display_menu(IDisplay *actual_lib, Input input)
     if (scores.empty())
         actual_lib->drawText({42 * cell_w, 14 * cell_h, "No scores yet.", Color::WHITE});
     else {
-        for (size_t i = 0; i < std::min(scores.size(), (size_t)5); ++i)
+        for (size_t i = 0; i < std::min(scores.size(), (size_t)3); ++i)
             actual_lib->drawText({42 * cell_w, (14 + i) * cell_h, std::to_string(i + 1) + ". " + scores[i].first + " - " + std::to_string(scores[i].second), Color::WHITE});
     }
 
-    actual_lib->drawText({15 * cell_w, 17 * cell_h, "Use ARROWS to navigate & ENTER to start a game", Color::BLUE});
-    actual_lib->drawText({30 * cell_w, 18 * cell_h, "Press 'Q' to quit", Color::RED});
+    actual_lib->drawText({15 * cell_w, 18 * cell_h, "Use ARROWS to navigate & ENTER to start a game", Color::BLUE});
+    actual_lib->drawText({30 * cell_w, 19 * cell_h, "Press 'Q' to quit", Color::RED});
 
     return "";
 }
