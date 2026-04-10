@@ -8,6 +8,8 @@
 #pragma once
 
 #include <dlfcn.h>
+#include <iostream>
+#include <stdexcept>
 #include "../include/IDisplay.hpp"
 #include "../include/IGame.hpp"
 
@@ -20,8 +22,10 @@ class DLLoader {
         DLLoader(const char *path)
         {
             handle = dlopen(path, RTLD_LAZY);
-            if (!handle)
-                handle = NULL;
+            if (!handle) {
+                char *dlopen_error = dlerror();
+                throw std::runtime_error(std::string("[DLLoader ERROR]: ") + (dlopen_error ? dlopen_error : "Failed to dlopen"));
+            }
         }
 
         ~DLLoader()
@@ -34,9 +38,11 @@ class DLLoader {
         {
             if (handle == NULL)
                 return NULL;
+
+            dlerror();
             T *(*createEntryPointFunc)() = reinterpret_cast<T *(*)()>(dlsym(handle, "createEntryPoint"));
-            if (createEntryPointFunc == NULL)
-                return NULL;
+            char *dlsym_error = dlerror();
+            if (dlsym_error) throw std::runtime_error(std::string("[DLLoader ERROR]: ") + dlsym_error);
             return createEntryPointFunc();
         }
 
@@ -44,9 +50,11 @@ class DLLoader {
         {
             if (handle == NULL)
                 return;
+
+            dlerror();
             void (*destroyEntryPointFunc)(T *) = reinterpret_cast<void (*)(T *)>(dlsym(handle, "destroyEntryPoint"));
-            if (destroyEntryPointFunc == NULL)
-                throw std::runtime_error("Failed to destroy entity");
+            char *dlsym_error = dlerror();
+            if (dlsym_error) throw std::runtime_error(std::string("[DLLoader ERROR]: ") + dlsym_error);
             destroyEntryPointFunc(actual_lib);
         }
 
