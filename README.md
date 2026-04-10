@@ -70,6 +70,20 @@ make
 
 ---
 
+## Controls & Key Bindings
+
+To ensure a seamless experience, the Arcade platform provides unified key bindings across all games and graphical libraries:
+
+- **Arrow Keys** (`UP`, `DOWN`, `LEFT`, `RIGHT`) : Navigate the menu or move your character in-game.
+- **`Enter`** : Select an option or perform an action.
+- **`M`** : Go back to the main menu.
+- **`R`** : Restart the current game.
+- **`1`** / **`2`** : Switch to previous / next graphical library.
+- **`3`** / **`4`** : Switch to previous / next game library.
+- **`Q`** : Quit the Arcade platform.
+
+---
+
 ## Documentation: How to implement new libraries
 
 Extending the Arcade system is straightforward. You only need to create a new shared library (`.so`) that inherits from either `IGame` or `IDisplay` and exports an `entryPoint` function so the Core can instantiate it via `dlsym`.

@@ -108,12 +108,25 @@ int main(int ac, char **av)
 
             // Afficher le jeu tant que pas de GameOver sinon remettre le menu
             if (gameInProgress == true) {
+                // Input ingame handling
+                if (input == Input::MENU) {
+                    game_loader->destroyInstance(actual_game);
+                    delete game_loader;
+                    game_loader = nullptr;
+                    actual_game = nullptr;
+                    gameInProgress = false;
+                    continue;
+                }
+                if (input == Input::RESTART) {
+                    actual_game->stop();
+                    actual_game->init();
+                }
                 std::string hotswap_result = run_game(input, actual_game, actual_lib);
                 // Hotswap game and graphics
                 if (hotswap_result != "None" && last_menu_selection == "game") hotswap_game(hotswap_result);
                 if (hotswap_result != "None" && last_menu_selection == "graphic") launch_lib(hotswap_result);
                 // Save score after game over
-                save_score();
+                if (actual_game != nullptr) save_score();
             }
             actual_lib->display();
             std::this_thread::sleep_for(std::chrono::milliseconds(33));
