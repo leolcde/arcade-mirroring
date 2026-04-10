@@ -79,6 +79,14 @@ void Snake::init()
             _wallsEntities.push_back(newWallPart);
         }
     }
+
+    // Init score display
+    Text newTextPart;
+    newTextPart.color = Color::MAGENTA;
+    newTextPart.text = "Score : 0";
+    newTextPart.x = 12;
+    newTextPart.y = 18;
+    _texts.push_back(newTextPart);
 }
 
 void Snake::stop() {}
@@ -147,6 +155,8 @@ void Snake::update(Input input)
     // Verify if snake eat apple
     if (_gameEntities[1].x == _gameEntities[0].x && _gameEntities[1].y == _gameEntities[0].y) {
         _score += 1;
+        std::string score_text = "Score : " + std::to_string(_score);
+        _texts[0].text = score_text;
         addSnakePart();
         // Generate new apple
         while (entityOnSnake(_gameEntities[0])) {

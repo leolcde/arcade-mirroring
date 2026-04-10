@@ -100,6 +100,14 @@ void Nibbler::init()
     	_gameEntities[0].x = dist_apple(gen);
     	_gameEntities[0].y = dist_apple(gen);
 	}
+
+    // Init score display
+    Text newTextPart;
+    newTextPart.color = Color::MAGENTA;
+    newTextPart.text = "Score : 0";
+    newTextPart.x = 12;
+    newTextPart.y = 18;
+    _texts.push_back(newTextPart);
 }
 
 void Nibbler::stop() {}
@@ -176,6 +184,8 @@ void Nibbler::update(Input input)
     // Verify if snake eat apple
     if (_gameEntities[1].x == _gameEntities[0].x && _gameEntities[1].y == _gameEntities[0].y) {
         _score += 1;
+        std::string score_text = "Score : " + std::to_string(_score);
+        _texts[0].text = score_text;
         addNibblerPart();
         // Generate new apple
         while (entityOnNibbler(_gameEntities[0])) {
